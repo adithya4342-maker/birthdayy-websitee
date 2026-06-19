@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Disha 💖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #ff4d6d;
+            --bg: #fff0f3;
+            --text: #590d22;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        #app-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary);
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        h2 { font-size: 2rem; }
+
+        input[type="text"], input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #ffb3c1;
+            border-radius: 25px;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Memory Game */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background-color: #ffb3c1;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            color: transparent;
+            transition: all 0.3s;
+        }
+
+        .card.flipped {
+            background-color: white;
+            color: black;
+            cursor: default;
+        }
+
+        /* Color Quiz */
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .color-btn {
+            background-color: #ddd;
+            color: #333;
+        }
+        .color-btn.selected {
+            border: 3px solid var(--text);
+            transform: scale(1.1);
+        }
+
+        /* Cake & Candles */
+        .cake-container {
+            margin: 30px 0;
+            position: relative;
+        }
+        .cake {
+            width: 200px;
+            height: 100px;
+            background: #ff8fa3;
+            border-radius: 10px 10px 0 0;
+            margin: 0 auto;
+            position: relative;
+            border-bottom: 20px solid #c9184a;
+        }
+        .candles {
+            display: flex;
+            justify-content: space-around;
+            position: absolute;
+            top: -30px;
+            width: 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .candle {
+            width: 6px;
+            height: 30px;
+            background: repeating-linear-gradient(45deg, white, white 5px, red 5px, red 10px);
+            position: relative;
+        }
+        .flame {
+            width: 10px;
+            height: 15px;
+            background: gold;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -15px;
+            left: -2px;
+            animation: flicker 0.5s infinite alternate;
+        }
+        .flame.extinguished {
+            display: none;
+        }
+
+        /* Awards Show */
+        .award-box {
+            display: none;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .award-box.active {
+            display: block;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .effect-flowers, .effect-hearts, .effect-confetti {
+            font-size: 3rem;
+            position: absolute;
+            animation: fall 3s linear forwards;
+            opacity: 0;
+        }
+
+        /* Quiz */
+        .quiz-q { margin-bottom: 20px; }
+        
+        /* Love Meter */
+        .meter-container {
+            width: 100%;
+            background: #ddd;
+            border-radius: 20px;
+            height: 30px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4d6d, #c9184a);
+            transition: width 2s ease-in-out;
+        }
+
+        /* Reasons */
+        .reason-item {
+            background: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        /* Letter */
+        .letter-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: left;
+            position: relative;
+            background-image: repeating-linear-gradient(transparent, transparent 29px, #ccc 30px);
+            line-height: 30px;
+            font-size: 1.1rem;
+        }
+        .letter-paragraph {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s;
+        }
+        .letter-paragraph.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.1); opacity: 1; } }
+        @keyframes fall {
+            0% { top: -10%; opacity: 1; }
+            100% { top: 110%; opacity: 0; transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+
+    <!-- Screen 1: Login -->
+    <div id="screen-1" class="screen active">
+        <h1>Welcome Disha 💖</h1>
+        <p>To enter your birthday surprise, please enter the secret code:</p>
+        <input type="password" id="passcode" placeholder="Enter code here...">
+        <br>
+        <button onclick="checkPassword()">Enter</button>
+        <p id="error-msg" style="color:red; display:none;">Incorrect code, try again!</p>
+    </div>
+
+    <!-- Screen 2: Emoji Game -->
+    <div id="screen-2" class="screen">
+        <h2>Match the Emojis!</h2>
+        <p>Find all the pairs to continue 🥰</p>
+        <div class="grid" id="grid"></div>
+    </div>
+
+    <!-- Screen 3: Congrats Game -->
+    <div id="screen-3" class="screen">
+        <h1>🎉 Congratulations! 🎉</h1>
+        <p>You have successfully completed the game!</p>
+        <button onclick="nextScreen(4)">Next Surprise ➔</button>
+    </div>
+
+    <!-- Screen 4: Favorite Color -->
+    <div id="screen-4" class="screen">
+        <h2>What are your favorite colors?</h2>
+        <p>(Select two!)</p>
+        <div class="color-options">
+            <button class="color-btn" onclick="toggleColor(this, 'white')">White</button>
+            <button class="color-btn" onclick="toggleColor(this, 'orange')">Orange</button>
+            <button class="color-btn" onclick="toggleColor(this, 'blue')">Blue</button>
+            <button class="color-btn" onclick="toggleColor(this, 'black')">Black</button>
+            <button class="color-btn" onclick="toggleColor(this, 'red')">Red</button>
+            <button class="color-btn" onclick="toggleColor(this, 'pink')">Pink</button>
+        </div>
+        <br>
+        <button onclick="checkColors()">Submit</button>
+        <p id="color-error" style="color:red; display:none;">Oops! Hint: Try Black and Orange!</p>
+    </div>
+
+    <!-- Screen 5: Cake -->
+    <div id="screen-5" class="screen">
+        <h2>Blow the Candles! 🎂</h2>
+        <div class="cake-container">
+            <div class="cake">
+                <div class="candles" id="candles-container">
+                    <!-- 18 Candles generated via JS -->
+                </div>
+            </div>
+        </div>
+        <button id="blow-btn" onclick="blowCandles()">💨 Blow!</button>
+        <div id="cake-msg" style="display:none; margin-top:20px;">
+            <h2 style="color:var(--text);">Congratulations! 🎉</h2>
+            <p style="font-weight:bold; font-size:1.2rem;">Ega ninu child alla officialy 😉</p>
+            <button onclick="nextScreen(6); initAwards();">Go to Awards ➔</button>
+        </div>
+    </div>
+
+    <!-- Screen 6: Virtual Awards Show -->
+    <div id="screen-6" class="screen">
+        <h1>🏆 Virtual Award Show 🏆</h1>
+        
+        <div id="award-1" class="award-box">
+            <h2>👑 Most Prettiest Girl in the World 👑</h2>
+            <p>Goes to... YOU!</p>
+            <button onclick="showAward(2)">Next Award ➔</button>
+        </div>
+
+        <div id="award-2" class="award-box">
+            <h2>💖 Loving and Caring Award 💖</h2>
+            <p>With a crown! You deserve it!</p>
+            <button onclick="showAward(3)">Next Award ➔</button>
+        </div>
+
+        <div id="award-3" class="award-box">
+            <h2>🥇 Most Under-rated Award goes to...</h2>
+            <p>Kaddi Award to youuuu, Kaddi Disha! 😂💕</p>
+            <button onclick="nextScreen(7)">Next Game ➔</button>
+        </div>
+    </div>
+
+    <!-- Screen 7: Partner Quiz -->
+    <div id="screen-7" class="screen">
+        <h2>How much do you love your partner? 🧐</h2>
+        
+        <div id="quiz-1" class="quiz-q">
+            <p>1. What is the favourite place for him?</p>
+            <input type="text" id="q1-ans">
+            <br><button onclick="nextQuiz(2)">Next</button>
+        </div>
+
+        <div id="quiz-2" class="quiz-q" style="display:none;">
+            <p>2. Who he loves more?</p>
+            <button onclick="nextQuiz(3)">Maaa</button>
+            <button onclick="nextQuiz(3)">Disha</button>
+            <button onclick="nextQuiz(3)">Chinnu</button>
+        </div>
+
+        <div id="quiz-3" class="quiz-q" style="display:none;">
+            <p>3. What is your dream place?</p>
+            <input type="text" id="q3-ans">
+            <br><button onclick="nextQuiz(4)">Next</button>
+        </div>
+
+        <div id="quiz-4" class="quiz-q" style="display:none;">
+            <p>4. What is the most important thing in your life?</p>
+            <input type="text" id="q4-ans">
+            <br><button onclick="checkQuiz()">See Results</button>
+        </div>
+    </div>
+
+    <!-- Screen 8: Romantic Card & Love Meter -->
+    <div id="screen-8" class="screen">
+        <h2>Love Meter 📈</h2>
+        <div class="meter-container">
+            <div class="meter-fill" id="love-meter"></div>
+        </div>
+        <h3 id="meter-text" style="display:none;">100% Full Love! ❤️</h3>
+        
+        <div style="margin-top: 30px;">
+            <h2>Write a Note (Optional)</h2>
+            <p>Write something sweet here if you want before continuing!</p>
+            <textarea rows="4" style="width:100%; border-radius:10px; padding:10px; border:1px solid #ffb3c1;"></textarea>
+            <br>
+            <button onclick="nextScreen(9); renderReasons();">Read Why I Love You ➔</button>
+        </div>
+    </div>
+
+    <!-- Screen 9: 100 Reasons (Paginated by 5) -->
+    <div id="screen-9" class="screen">
+        <h2>Reasons Why I Love You</h2>
+        <div id="reasons-container"></div>
+        <button onclick="prevReasons()" id="prev-btn" style="display:none;">⬅ Back</button>
+        <button onclick="nextReasons()" id="next-btn">More ➔</button>
+    </div>
+
+    <!-- Screen 10: Final Letter -->
+    <div id="screen-10" class="screen">
+        <div class="letter-container" id="letter-content">
+            <p class="letter-paragraph" style="font-family:'Dancing Script'; font-size:2rem; color:var(--primary);">My Dearest Maaaaa,</p>
+            
+            <p class="letter-paragraph">Today is the most beautiful day for me because it is the day my precious Maaaaa came into this world. 🥹💕 First of all, I thank Lord Sri Rama and Mother Sita for blessing this world with someone as kind, caring, loving, and beautiful as you. 🙏🌺🏹 May Lord Rama always protect you, guide you, and bless you with endless happiness, good health, success, peace, and love throughout your life. ❤️✨</p>
+            
+            <p class="letter-paragraph">Maaaaa, words will never be enough to express how much you mean to me. You are not just someone I love; you are my happiness, my comfort, my peace, and one of the most precious blessings in my life. ❤️🫂 Every conversation with you makes my day brighter, every smile of yours makes my heart happier, and every memory with you becomes a treasure that I will always cherish. 🥰💞</p>
+            
+            <p class="letter-paragraph">Sometimes I wonder what good thing I did to deserve someone as wonderful as you. Out of billions of people in this world, God brought you into my life, and that is something I will always be grateful for. ❤️🌹 You have filled my life with so much joy, care, and love that I cannot imagine my days without you. 💖✨</p>
+            
+            <p class="letter-paragraph">Thank you, Maaaaa, for always being there for me, for understanding me, for supporting me, for caring about me, and for making me feel special. 🤗❤️ Your love gives me strength, your words give me hope, and your presence gives me peace. Whenever I think of happiness, your face is the first thing that comes to my mind. 😊💕</p>
+            
+            <p class="letter-paragraph">I love your smile that brightens my darkest days. 😘❤️ I love your eyes that make me forget the whole world. 🥹💕 I love your laugh that instantly makes everything better. 🌸 I love your caring heart, your kindness, your innocence, and every little thing that makes you who you are. To me, you are truly one of a kind. 💖👑</p>
+            
+            <p class="letter-paragraph">On your special day, I pray that Lord Sri Rama blesses you with everything your heart desires. 🙏🏹❤️ May your dreams come true, may your path be filled with success, and may your life always be surrounded by love, happiness, and beautiful moments. 🌺✨</p>
+            
+            <p class="letter-paragraph">No matter where life takes us, I will always pray for your happiness and always care for you from the bottom of my heart. ❤️♾️ You deserve all the love, respect, joy, and blessings in this world because you are such a beautiful soul. 🫂💕</p>
+            
+            <p class="letter-paragraph">Happy Birthday once again, my Maaaaa. 🎂👑❤️ Thank you for making my life brighter just by being in it. May this birthday bring you endless smiles, unforgettable memories, and all the happiness you deserve. 🌹🥰✨</p>
+            
+            <p class="letter-paragraph" style="text-align:right; font-weight:bold; margin-top:30px; font-family:'Dancing Script'; font-size:1.8rem; color:var(--primary);">from ur kanda<br>too myy maaaaaaaa ❤️</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Navigation
+    function nextScreen(num) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + num).classList.add('active');
+        
+        if(num === 5) renderCandles();
+        if(num === 8) fillLoveMeter();
+        if(num === 10) animateLetter();
+    }
+
+    // Password
+    function checkPassword() {
+        const pass = document.getElementById('passcode').value.toLowerCase().trim();
+        if (pass === 'sitaramaa') {
+            nextScreen(2);
+            initGame();
+        } else {
+            document.getElementById('error-msg').style.display = 'block';
+        }
+    }
+
+    // Memory Game
+    const emojis = ['🥳', '🦋', '🧿', '💗', '👀', '🎂', '🌹', '👑'];
+    let cards = [...emojis, ...emojis];
+    let firstCard = null, secondCard = null;
+    let lockBoard = false;
+    let matches = 0;
+
+    function initGame() {
+        cards.sort(() => 0.5 - Math.random());
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '';
+        cards.forEach((emoji, index) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.emoji = emoji;
+            card.dataset.index = index;
+            card.addEventListener('click', flipCard);
+            grid.appendChild(card);
+        });
+    }
+
+    function flipCard() {
+        if (lockBoard || this === firstCard || this.classList.contains('flipped')) return;
+        this.classList.add('flipped');
+        this.innerText = this.dataset.emoji;
+
+        if (!firstCard) {
+            firstCard = this;
+            return;
+        }
+        secondCard = this;
+        checkMatch();
+    }
+
+    function checkMatch() {
+        let isMatch = firstCard.dataset.emoji === secondCard.dataset.emoji;
+        isMatch ? disableCards() : unflipCards();
+    }
+
+    function disableCards() {
+        firstCard.removeEventListener('click', flipCard);
+        secondCard.removeEventListener('click', flipCard);
+        resetBoard();
+        matches++;
+        if (matches === 8) {
+            setTimeout(() => nextScreen(3), 1000);
+        }
+    }
+
+    function unflipCards() {
+        lockBoard = true;
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            firstCard.innerText = '';
+            secondCard.innerText = '';
+            resetBoard();
+        }, 1000);
+    }
+
+    function resetBoard() {
+        [firstCard, secondCard, lockBoard] = [null, null, false];
+    }
+
+    // Color Quiz
+    let selectedColors = [];
+    function toggleColor(btn, color) {
+        btn.classList.toggle('selected');
+        if (selectedColors.includes(color)) {
+            selectedColors = selectedColors.filter(c => c !== color);
+        } else {
+            selectedColors.push(color);
+        }
+    }
+
+    function checkColors() {
+        if (selectedColors.includes('black') && selectedColors.includes('orange') && selectedColors.length === 2) {
+            nextScreen(5);
+        } else {
+            document.getElementById('color-error').style.display = 'block';
+        }
+    }
+
+    // Candles
+    function renderCandles() {
+        const container = document.getElementById('candles-container');
+        container.innerHTML = '';
+        for(let i=0; i<18; i++) {
+            const candle = document.createElement('div');
+            candle.className = 'candle';
+            const flame = document.createElement('div');
+            flame.className = 'flame';
+            candle.appendChild(flame);
+            container.appendChild(candle);
+        }
+    }
+
+    function blowCandles() {
+        const flames = document.querySelectorAll('.flame');
+        flames.forEach((flame, index) => {
+            setTimeout(() => {
+                flame.classList.add('extinguished');
+            }, index * 100); 
+        });
+        setTimeout(() => {
+            document.getElementById('blow-btn').style.display = 'none';
+            document.getElementById('cake-msg').style.display = 'block';
+        }, 2000);
+    }
+
+    // Awards
+    function initAwards() {
+        document.getElementById('award-1').classList.add('active');
+        createFallingEffect('🌸', 'effect-flowers');
+    }
+
+    function showAward(num) {
+        document.querySelectorAll('.award-box').forEach(b => b.classList.remove('active'));
+        document.getElementById('award-' + num).classList.add('active');
+        
+        if(num === 2) createFallingEffect('💖', 'effect-hearts');
+        if(num === 3) createFallingEffect('✨', 'effect-confetti');
+    }
+
+    function createFallingEffect(emoji, className) {
+        for(let i=0; i<15; i++) {
+            let el = document.createElement('div');
+            el.innerText = emoji;
+            el.className = className;
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 4000);
+        }
+    }
+
+    // Quiz
+    function nextQuiz(num) {
+        document.querySelectorAll('.quiz-q').forEach(q => q.style.display = 'none');
+        document.getElementById('quiz-' + num).style.display = 'block';
+    }
+
+    function checkQuiz() {
+        // Accept any answer for love!
+        nextScreen(8);
+    }
+
+    // Love Meter
+    function fillLoveMeter() {
+        setTimeout(() => {
+            document.getElementById('love-meter').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('meter-text').style.display = 'block';
+            }, 2000);
+        }, 500);
+    }
+
+    // 100 Reasons Pagination
+    const reasons = [
+        "😊 Your smile.", "👀 Your eyes.", "😂 Your laugh.", "💖 Your kindness.", "🤝 Your honesty.",
+        "🥰 Your caring nature.", "🌸 Your patience.", "😎 Your confidence.", "🧠 Your intelligence.", "😄 Your sense of humor.",
+        "💕 You make me happy.", "🤗 You understand me.", "👂 You listen to me.", "🌟 You support me.", "🚀 You encourage me.",
+        "🙌 You believe in me.", "💝 You respect me.", "💘 You make me feel special.", "🌹 You make me feel appreciated.", "🛡️ You make me feel safe.",
+        "🤍 You are always there for me.", "☀️ You cheer me up.", "✨ You inspire me.", "🔥 You motivate me.", "🫶 You accept me as I am.",
+        "😍 You make me smile.", "🎈 You make ordinary days special.", "🎀 You remember little details.", "💌 You care about my feelings.", "🌺 You are thoughtful.",
+        "🔐 You are trustworthy.", "💍 You are loyal.", "🌟 You are genuine.", "💪 You are hardworking.", "🦁 You are strong.",
+        "🏆 You are brave.", "🌷 You are beautiful inside and out.", "❤️‍🩹 You have a kind heart.", "🌈 You are unique.", "💎 You are amazing.",
+        "🕊️ You bring peace to my life.", "🎉 You make life more exciting.", "🤭 You make me laugh when I'm sad.", "🎊 You celebrate my successes.", "🌻 You help me through challenges.",
+        "💞 You make me feel understood.", "♾️ You never stop caring.", "🤗 You are compassionate.", "🌼 You are respectful.", "👑 You make me feel important.",
+        "🌞 Your positive attitude.", "💗 Your warm heart.", "📱 Your sweet messages.", "📝 Your thoughtful words.", "🌸 Your gentle nature.",
+        "🎯 Your determination.", "🎁 Your generosity.", "🌅 Your optimism.", "🤍 Your sincerity.", "✨ Your beautiful soul.",
+        "🎶 The way you talk.", "💭 The way you think.", "💕 The way you care.", "🌹 The way you support others.", "💓 The way you make me feel.",
+        "🌞 The way you brighten my day.", "🚀 The way you encourage me.", "💪 The way you stay strong.", "🌟 The way you stay true to yourself.", "📸 The way you make memories special.",
+        "📚 You teach me new things.", "🌱 You help me grow.", "⭐ You bring out the best in me.", "💯 You make me a better person.", "🤝 You value honesty.",
+        "🌍 You are respectful to everyone.", "🛟 You are dependable.", "💖 You are understanding.", "🕊️ You are forgiving.", "🌺 You are thoughtful in everything you do.",
+        "🌠 You make me excited about the future.", "🍀 You make me appreciate life more.", "💬 You make every conversation enjoyable.", "🎰 You make me feel lucky.", "❤️ You make me feel loved.",
+        "🤗 You make me feel cared for.", "🫂 You make me feel accepted.", "🌟 You make me feel confident.", "💪 You make me feel stronger.", "🏡 You make me feel at home.",
+        "📞 You are my favorite person to talk to.", "😘 You always find a way to make me smile.", "🌤️ You make difficult days easier.", "🙏 You are a blessing in my life.", "✨ You make every moment better.",
+        "🌈 You bring joy wherever you go.", "💫 You make life meaningful.", "💓 You make my heart happy.", "👑 You are incredibly special to me.", "❤️‍🔥 Because you are you, and that's all the reason I need. 💍🥰💕✨🌹❤️"
+    ];
+
+    let currentReasonPage = 0;
+    const reasonsPerPage = 5;
+
+    function renderReasons() {
+        const container = document.getElementById('reasons-container');
+        container.innerHTML = '';
+        
+        const start = currentReasonPage * reasonsPerPage;
+        const end = start + reasonsPerPage;
+        const currentSlice = reasons.slice(start, end);
+
+        currentSlice.forEach(r => {
+            let div = document.createElement('div');
+            div.className = 'reason-item';
+            div.innerText = r;
+            container.appendChild(div);
+        });
+
+        document.getElementById('prev-btn').style.display = currentReasonPage > 0 ? 'inline-block' : 'none';
+        
+        if (end >= reasons.length) {
+            document.getElementById('next-btn').innerText = 'Read Letter ➔';
+            document.getElementById('next-btn').onclick = () => nextScreen(10);
+        } else {
+            document.getElementById('next-btn').innerText = 'More ➔';
+            document.getElementById('next-btn').onclick = nextReasons;
+        }
+    }
+
+    function nextReasons() {
+        currentReasonPage++;
+        renderReasons();
+    }
+
+    function prevReasons() {
+        currentReasonPage--;
+        renderReasons();
+    }
+
+    // Letter Animation
+    function animateLetter() {
+        const paragraphs = document.querySelectorAll('.letter-paragraph');
+        paragraphs.forEach((p, index) => {
+            setTimeout(() => {
+                p.classList.add('visible');
+            }, index * 1500); 
+        });
+    }
+
+</script>
+</body>
+</html>
